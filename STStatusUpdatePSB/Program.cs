@@ -18,9 +18,9 @@ namespace STStatusUpdatePSB
         public static void PsbStatusUpdate()
         {
 
-            IShippinginvoiceRepository shippingRepository = new ShippinginvoiceRepositorySql();
+            IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PSBPIBIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive();
+            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive();
 
             if (shippingInvoiceList != null)
             {
@@ -33,7 +33,7 @@ namespace STStatusUpdatePSB
                              "Task Started",
                              DateTime.Now);
 
-                foreach (PSBPIBIssueDetails shipDetails in shippingInvoiceList)
+                foreach (PsbPibIssueDetails shipDetails in shippingInvoiceList)
                 {
                    logId = shippingRepository.AddLogStStatusUpdatePsb(
                                   shipList.ToString(),
@@ -51,7 +51,7 @@ namespace STStatusUpdatePSB
                         shippingRepository.UpdateShippingInvoicePsbIssuesResolved(shipDetails.ShippingInvoiceFk, false, DateTime.Now);
 
                         //log
-                        shippingRepository.AddLogTrackPsbpibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
+                        shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
                                    , "STStatusUpdatePSB", false, false, null, true, false, null, false,
                                    "PSB issues mark resolved from ST", DateTime.Now);
 
@@ -74,7 +74,7 @@ namespace STStatusUpdatePSB
                     //if all not resolved add log
                     else
                     {
-                        shippingRepository.AddLogTrackPsbpibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
+                        shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
                                                       , "STStatusUpdatePSB", true, null, null, false, null, null, null,
                                                       "PSB issues are not all resolved", DateTime.Now);
 
@@ -111,9 +111,9 @@ namespace STStatusUpdatePSB
         public static void PibStatusUpdate()
         {
 
-            IShippinginvoiceRepository shippingRepository = new ShippinginvoiceRepositorySql();
+            IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PSBPIBIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive();
+            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive();
 
             if (shippinginvoicePIBList != null)
             {
@@ -125,7 +125,7 @@ namespace STStatusUpdatePSB
                           "PIBStatusUpdate Started",
                           DateTime.Now);
 
-                foreach (PSBPIBIssueDetails shipDetails in shippinginvoicePIBList)
+                foreach (PsbPibIssueDetails shipDetails in shippinginvoicePIBList)
                 {
                     // check if all PIB issues resolved
                     bool isResolved = shippingRepository.CheckIfAllPibIssuesResolved(shipDetails.ShippingInvoiceFk);
@@ -135,7 +135,7 @@ namespace STStatusUpdatePSB
                         shippingRepository.UpdateShippingInvoicePibIssuesResolved(shipDetails.ShippingInvoiceFk, false, DateTime.Now);
 
                         //log
-                        shippingRepository.AddLogTrackPsbpibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
+                        shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
                                    , "STStatusUpdatePSB", null, null, null, null, true, null, true,
                                    "PIB issues mark resolved from ST", DateTime.Now);
 
@@ -157,7 +157,7 @@ namespace STStatusUpdatePSB
                     //if all not resolved add log
                     else
                     {
-                        shippingRepository.AddLogTrackPsbpibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
+                        shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
                                                       , "STStatusUpdatePSB", null, null, null, null, true, null, false,
                                                       "PIB issues are not all resolved", DateTime.Now);
 

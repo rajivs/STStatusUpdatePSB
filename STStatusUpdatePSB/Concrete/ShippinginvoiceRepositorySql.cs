@@ -10,23 +10,23 @@ using STStatusUpdatePSB.Entities;
 namespace STStatusUpdatePSB.Concrete
 {
 
-    public class ShippinginvoiceRepositorySql : IShippinginvoiceRepository
+    public class ShippingInvoiceRepositorySql : IShippingInvoiceRepository
     {
 
-        private readonly ShippingInvoiceDbLayer _ShippinginvoiceDbl = new ShippingInvoiceDbLayer();
+        private readonly ShippingInvoiceDbLayer _shippingInvoiceDbl = new ShippingInvoiceDbLayer();
 
-        public List<PSBPIBIssueDetails> GetAllPsbIssueActive()
+        public List<PsbPibIssueDetails> GetAllPsbIssueActive()
         {
-            DataSet dsPSBIssues = _ShippinginvoiceDbl.GetAllPsbIssueActive();
+            DataSet dsPsbIssues = _shippingInvoiceDbl.GetAllPsbIssueActive();
             
-            List<PSBPIBIssueDetails> psbIssuesList = null;
-            if (dsPSBIssues != null)
+            List<PsbPibIssueDetails> psbIssuesList = null;
+            if (dsPsbIssues != null)
             {
-                if (dsPSBIssues.Tables[0].Rows.Count > 0)
+                if (dsPsbIssues.Tables[0].Rows.Count > 0)
                 {
                     psbIssuesList =
-                        dsPSBIssues.Tables[0].AsEnumerable()
-                            .Select(row => new PSBPIBIssueDetails
+                        dsPsbIssues.Tables[0].AsEnumerable()
+                            .Select(row => new PsbPibIssueDetails
                             {
                                 ShippingInvoiceFk = Convert.IsDBNull(row.Field<object>("shippinginvoice_Id")) ? 0 : Convert.ToInt32(row.Field<object>("shippinginvoice_Id")),
                                 PibCustomerNoteFk = Convert.IsDBNull(row.Field<object>("shippinginvoice_PIBCustomerNote_Fk")) ? 0 : Convert.ToInt32(row.Field<object>("shippinginvoice_PIBCustomerNote_Fk")),
@@ -39,38 +39,38 @@ namespace STStatusUpdatePSB.Concrete
             return psbIssuesList;
         }
 
-        public bool CheckIfAllPsbIssuesResolved(int shippinginvoiceId)
+        public bool CheckIfAllPsbIssuesResolved(int shippingInvoiceId)
         {
-            return _ShippinginvoiceDbl.CheckIfAllPsbIssuesResolved(shippinginvoiceId);
+            return _shippingInvoiceDbl.CheckIfAllPsbIssuesResolved(shippingInvoiceId);
         }
         public int UpdateShippingInvoicePsbIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved)
         {
-            int updateStatus = _ShippinginvoiceDbl.UpdateShippingInvoicePsbIssuesResolved(shippingInvoiceFk, psbIssueActive, dateResolved);
+            int updateStatus = _shippingInvoiceDbl.UpdateShippingInvoicePsbIssuesResolved(shippingInvoiceFk, psbIssueActive, dateResolved);
 
             return updateStatus;
         }
-        public int AddLogTrackPsbpibIssueLifeCycle(int shippingInvoiceFk, int userAdminfk, string issueCreatedby,
-           bool? isPSBIssueActive, bool? isPIBIssueActive, string psbIssueList, bool? isPSBResolved,
-           bool? pibIssueActive, string pibIssueList, bool? isPIBResolved, string comment, DateTime dateCreated)
+        public int AddLogTrackPsbPibIssueLifeCycle(int shippingInvoiceFk, int userAdminfk, string issueCreatedby,
+           bool? isPsbIssueActive, bool? isPibIssueActive, string psbIssueList, bool? isPsbResolved,
+           bool? pibIssueActive, string pibIssueList, bool? isPibResolved, string comment, DateTime dateCreated)
         {
-            int newLogId = _ShippinginvoiceDbl.AddLogTrackPsbpibIssueLifeCycle(shippingInvoiceFk, userAdminfk, issueCreatedby,
-            isPSBIssueActive, isPIBIssueActive, psbIssueList, isPSBResolved,
-            pibIssueActive, pibIssueList, isPIBResolved, comment, dateCreated);
+            int newLogId = _shippingInvoiceDbl.AddLogTrackPsbpibIssueLifeCycle(shippingInvoiceFk, userAdminfk, issueCreatedby,
+            isPsbIssueActive, isPibIssueActive, psbIssueList, isPsbResolved,
+            pibIssueActive, pibIssueList, isPibResolved, comment, dateCreated);
             return newLogId;
 
         }
-        public List<PSBPIBIssueDetails> GetAllPibIssueActive()
+        public List<PsbPibIssueDetails> GetAllPibIssueActive()
         {
-            DataSet dsPSBIssues = _ShippinginvoiceDbl.GetAllPibIssueActive();
+            DataSet dsPsbIssues = _shippingInvoiceDbl.GetAllPibIssueActive();
 
-            List<PSBPIBIssueDetails> psbIssuesList = null;
-            if (dsPSBIssues != null)
+            List<PsbPibIssueDetails> psbIssuesList = null;
+            if (dsPsbIssues != null)
             {
-                if (dsPSBIssues.Tables[0].Rows.Count > 0)
+                if (dsPsbIssues.Tables[0].Rows.Count > 0)
                 {
                     psbIssuesList =
-                        dsPSBIssues.Tables[0].AsEnumerable()
-                            .Select(row => new PSBPIBIssueDetails
+                        dsPsbIssues.Tables[0].AsEnumerable()
+                            .Select(row => new PsbPibIssueDetails
                             {
                                 ShippingInvoiceFk = Convert.IsDBNull(row.Field<object>("shippinginvoice_Id")) ? 0 : Convert.ToInt32(row.Field<object>("shippinginvoice_Id")),
 
@@ -80,26 +80,26 @@ namespace STStatusUpdatePSB.Concrete
             }
             return psbIssuesList;
         }
-        public bool CheckIfAllPibIssuesResolved(int shippinginvoiceId)
+        public bool CheckIfAllPibIssuesResolved(int shippingInvoiceId)
         {
-            return _ShippinginvoiceDbl.CheckIfAllPibIssuesResolved(shippinginvoiceId);
+            return _shippingInvoiceDbl.CheckIfAllPibIssuesResolved(shippingInvoiceId);
         }
         public int UpdateShippingInvoicePibIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved)
         {
-            int updateStatus = _ShippinginvoiceDbl.UpdateShippingInvoicePibIssuesResolved(shippingInvoiceFk, psbIssueActive, dateResolved);
+            int updateStatus = _shippingInvoiceDbl.UpdateShippingInvoicePibIssuesResolved(shippingInvoiceFk, psbIssueActive, dateResolved);
 
             return updateStatus;
         }
-        public int AddLogStStatusUpdatePsb(string shippinginvoiceList, string actionName, int shippingInvoiceFk, string runFrom, string message, DateTime dateCreated)
+        public int AddLogStStatusUpdatePsb(string shippingInvoiceList, string actionName, int shippingInvoiceFk, string runFrom, string message, DateTime dateCreated)
         {
-            int newLogId = _ShippinginvoiceDbl.AddLogStStatusUpdatePsb(shippinginvoiceList, actionName, shippingInvoiceFk, runFrom, message, dateCreated);
+            int newLogId = _shippingInvoiceDbl.AddLogStStatusUpdatePsb(shippingInvoiceList, actionName, shippingInvoiceFk, runFrom, message, dateCreated);
 
             return newLogId;
 
         }
-        public int UpdateCustomerNoteIssueResolved(int customerNoteFk, bool isallResolved, DateTime dateResolved, bool IsPSBCustomerNote)
+        public int UpdateCustomerNoteIssueResolved(int customerNoteFk, bool isAllResolved, DateTime dateResolved, bool IsPSBCustomerNote)
         {
-            int updateStatus = _ShippinginvoiceDbl.UpdateCustomerNoteIssueResolved( customerNoteFk, isallResolved, dateResolved, IsPSBCustomerNote);
+            int updateStatus = _shippingInvoiceDbl.UpdateCustomerNoteIssueResolved( customerNoteFk, isAllResolved, dateResolved, IsPSBCustomerNote);
             return updateStatus;
         }
     }

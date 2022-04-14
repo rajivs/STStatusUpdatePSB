@@ -4,7 +4,7 @@ using System.Text;
 
 namespace STStatusUpdatePSB.Entities
 {
-    public class PSBPIBIssueDetails
+    public class PsbPibIssueDetails
     {
         public int ShippingInvoiceFk{ get; set; }
         public int PsbCustomerNoteFk { get; set; }
