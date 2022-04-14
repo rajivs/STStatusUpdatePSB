@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace STStatusUpdatePSB.Concrete
 {
-    public class ShippinginvoiceDbLayer
+    public class ShippingInvoiceDbLayer
     {
         readonly string _sCon = ConfigurationManager.ConnectionStrings["Connection"].ToString();
         DataSet _ds;
 
-        public DataSet GetAllPSBIssueActive()
+        public DataSet GetAllPsbIssueActive()
         {
             try
             {
@@ -28,13 +28,13 @@ namespace STStatusUpdatePSB.Concrete
             }
             return _ds;
         }
-        public bool CheckIfAllPSBIssuesResolved(int shippinginvoiceId)
+        public bool CheckIfAllPsbIssuesResolved(int shippingInvoiceId)
         {
             try
             {
                 SqlParameter[] paramCollection = SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_be_CheckIfAllPSBIssuesResolved", true);
 
-                paramCollection[1].Value = shippinginvoiceId;
+                paramCollection[1].Value = shippingInvoiceId;
                 paramCollection[2].Value = null; // true/false
 
                 SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_be_CheckIfAllPSBIssuesResolved", paramCollection);
@@ -48,7 +48,7 @@ namespace STStatusUpdatePSB.Concrete
                 throw ex;
             }
         }
-        public int UpdateShippingInvoicePSBIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved)
+        public int UpdateShippingInvoicePsbIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved)
         {
             try
             {
@@ -72,9 +72,9 @@ namespace STStatusUpdatePSB.Concrete
                 throw ex;
             }
         }
-        public int AddLogTrackPSBPIBIssueLifeCycle(int shippingInvoiceFk, int userAdminfk, string issueCreatedby,
-           bool? isPSBIssueActive, bool? isPIBIssueActive, string psbIssueList, bool? isPSBResolved,
-           bool? pibIssueActive, string pibIssueList, bool? isPIBResolved, string comment, DateTime dateCreated)
+        public int AddLogTrackPsbpibIssueLifeCycle(int shippingInvoiceFk, int userAdminfk, string issueCreatedby,
+           bool? isPsbIssueActive, bool? isPibIssueActive, string psbIssueList, bool? isPsbResolved,
+           bool? pibIssueActive, string pibIssueList, bool? isPibResolved, string comment, DateTime dateCreated)
         {
             try
             {
@@ -85,12 +85,12 @@ namespace STStatusUpdatePSB.Concrete
                 paramCollection[3].Value = shippingInvoiceFk;
                 paramCollection[4].Value = userAdminfk;
                 paramCollection[5].Value = issueCreatedby;
-                paramCollection[6].Value = isPSBIssueActive;
-                paramCollection[7].Value = isPIBIssueActive;
+                paramCollection[6].Value = isPsbIssueActive;
+                paramCollection[7].Value = isPibIssueActive;
                 paramCollection[8].Value = psbIssueList;
-                paramCollection[9].Value = isPSBResolved;
+                paramCollection[9].Value = isPsbResolved;
                 paramCollection[10].Value = pibIssueActive;
-                paramCollection[11].Value = isPIBResolved;
+                paramCollection[11].Value = isPibResolved;
                 paramCollection[12].Value = pibIssueList;
                 paramCollection[13].Value = comment;
                 paramCollection[14].Value = dateCreated;
@@ -110,7 +110,7 @@ namespace STStatusUpdatePSB.Concrete
                 throw ex;
             }
         }
-        public DataSet GetAllPIBIssueActive()
+        public DataSet GetAllPibIssueActive()
         {
             try
             {
@@ -123,7 +123,7 @@ namespace STStatusUpdatePSB.Concrete
             }
             return _ds;
         }
-        public bool CheckIfAllPIBIssuesResolved(int shippinginvoiceId)
+        public bool CheckIfAllPibIssuesResolved(int shippinginvoiceId)
         {
             try
             {
@@ -143,7 +143,7 @@ namespace STStatusUpdatePSB.Concrete
                 throw ex;
             }
         }
-        public int UpdateShippingInvoicePIBIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved)
+        public int UpdateShippingInvoicePibIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved)
         {
             try
             {
@@ -167,7 +167,7 @@ namespace STStatusUpdatePSB.Concrete
                 throw ex;
             }
         }
-        public int AddLogSTStatusUpdatePSB(string shippinginvoiceList, string actionName, int shippingInvoiceFk, string runFrom, string message, DateTime dateCreated)
+        public int AddLogStStatusUpdatePsb(string shippinginvoiceList, string actionName, int shippingInvoiceFk, string runFrom, string message, DateTime dateCreated)
         {
             try
             {
@@ -198,7 +198,7 @@ namespace STStatusUpdatePSB.Concrete
             }
 
         }
-        public int UpdateCustomerNoteIssueResolved(int customerNoteFk, bool isallResolved, DateTime dateResolved, bool IsPSBCustomerNote)
+        public int UpdateCustomerNoteIssueResolved(int customerNoteFk, bool isallResolved, DateTime dateResolved, bool isPsbCustomerNote)
         {
             try
             {
@@ -207,7 +207,7 @@ namespace STStatusUpdatePSB.Concrete
                 paramCollection[1].Value = customerNoteFk;
                 paramCollection[2].Value = isallResolved;
                 paramCollection[3].Value = dateResolved;
-                paramCollection[4].Value = IsPSBCustomerNote;
+                paramCollection[4].Value = isPsbCustomerNote;
                 paramCollection[5].Value = null;  // UpdateStatus
                 paramCollection[6].Value = null; // Message
 

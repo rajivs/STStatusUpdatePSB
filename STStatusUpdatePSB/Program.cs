@@ -11,31 +11,31 @@ namespace STStatusUpdatePSB
     {
         static void Main(string[] args)
         {
-            PSBStatusUpdate();
-            PIBStatusUpdate();
+            PsbStatusUpdate();
+            PibStatusUpdate();
         }
 
-        public static void PSBStatusUpdate()
+        public static void PsbStatusUpdate()
         {
 
             IShippinginvoiceRepository shippingRepository = new ShippinginvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PSBPIBIssueDetails> shippinginvoiceList = shippingRepository.GetAllPSBIssueActive();
+            List<PSBPIBIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive();
 
-            if (shippinginvoiceList != null)
+            if (shippingInvoiceList != null)
             {
-                string shipList = string.Join(",", shippinginvoiceList.Select(x => x.ShippingInvoiceFk));
+                string shipList = string.Join(",", shippingInvoiceList.Select(x => x.ShippingInvoiceFk));
 
-                int logId = shippingRepository.AddLogSTStatusUpdatePSB(shipList.ToString(),
+                int logId = shippingRepository.AddLogStStatusUpdatePsb(shipList.ToString(),
                              "PSBStatusUpdate",
                               0, // shippingInvoice id
                              "STStatusUpdatePSB",
                              "Task Started",
                              DateTime.Now);
 
-                foreach (PSBPIBIssueDetails shipDetails in shippinginvoiceList)
+                foreach (PSBPIBIssueDetails shipDetails in shippingInvoiceList)
                 {
-                   logId = shippingRepository.AddLogSTStatusUpdatePSB(
+                   logId = shippingRepository.AddLogStStatusUpdatePsb(
                                   shipList.ToString(),
                                   "Task In Process For : " + shipDetails.ShippingInvoiceFk,
                                   shipDetails.ShippingInvoiceFk,
@@ -44,19 +44,19 @@ namespace STStatusUpdatePSB
                                   DateTime.Now);
 
                     // check if all PSB issues resolved
-                    bool isResolved = shippingRepository.CheckIfAllPSBIssuesResolved(shipDetails.ShippingInvoiceFk);
+                    bool isResolved = shippingRepository.CheckIfAllPsbIssuesResolved(shipDetails.ShippingInvoiceFk);
                     if (isResolved)
                     {
-                        // if all fixed update shippinginvoice
-                        shippingRepository.UpdateShippingInvoicePSBIssuesResolved(shipDetails.ShippingInvoiceFk, false, DateTime.Now);
+                        // if all fixed update shipping invoice
+                        shippingRepository.UpdateShippingInvoicePsbIssuesResolved(shipDetails.ShippingInvoiceFk, false, DateTime.Now);
 
                         //log
-                        shippingRepository.AddLogTrackPSBPIBIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
+                        shippingRepository.AddLogTrackPsbpibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
                                    , "STStatusUpdatePSB", false, false, null, true, false, null, false,
                                    "PSB issues mark resolved from ST", DateTime.Now);
 
 
-                        logId = shippingRepository.AddLogSTStatusUpdatePSB(
+                        logId = shippingRepository.AddLogStStatusUpdatePsb(
                                                          shipList.ToString(),
                                                          "Task In Process For : " + shipDetails.ShippingInvoiceFk,
                                                          shipDetails.ShippingInvoiceFk,
@@ -66,19 +66,19 @@ namespace STStatusUpdatePSB
 
                         //Updating customer note will remove entry from PTM
                         //CustomerNote_PSBAllResolved = 1 
-                        if (shipDetails.PSBCustomerNoteFk > 0) {
-                            shippingRepository.UpdateCustomerNoteIssueResolved(shipDetails.PSBCustomerNoteFk, true, DateTime.Now, true);
+                        if (shipDetails.PsbCustomerNoteFk > 0) {
+                            shippingRepository.UpdateCustomerNoteIssueResolved(shipDetails.PsbCustomerNoteFk, true, DateTime.Now, true);
 
                         }
                     }
                     //if all not resolved add log
                     else
                     {
-                        shippingRepository.AddLogTrackPSBPIBIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
+                        shippingRepository.AddLogTrackPsbpibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
                                                       , "STStatusUpdatePSB", true, null, null, false, null, null, null,
                                                       "PSB issues are not all resolved", DateTime.Now);
 
-                        logId = shippingRepository.AddLogSTStatusUpdatePSB(
+                        logId = shippingRepository.AddLogStStatusUpdatePsb(
                                                         shipList.ToString(),
                                                         "Task In Process For : " + shipDetails.ShippingInvoiceFk,
                                                         shipDetails.ShippingInvoiceFk,
@@ -87,7 +87,7 @@ namespace STStatusUpdatePSB
                                                         DateTime.Now);
 
                     }
-                    int logIdComplete = shippingRepository.AddLogSTStatusUpdatePSB(
+                    int logIdComplete = shippingRepository.AddLogStStatusUpdatePsb(
                                      shipList.ToString(),
                                     "PSBStatusUpdate",
                                      shipDetails.ShippingInvoiceFk,
@@ -99,7 +99,7 @@ namespace STStatusUpdatePSB
             }
             else
             {
-                int logId = shippingRepository.AddLogSTStatusUpdatePSB("",
+                int logId = shippingRepository.AddLogStStatusUpdatePsb("",
                              "PSBStatusUpdate Skipped",
                              0,
                              "PSBStatusUpdate",
@@ -108,17 +108,17 @@ namespace STStatusUpdatePSB
             }
         }
 
-        public static void PIBStatusUpdate()
+        public static void PibStatusUpdate()
         {
 
             IShippinginvoiceRepository shippingRepository = new ShippinginvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PSBPIBIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPIBIssueActive();
+            List<PSBPIBIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive();
 
             if (shippinginvoicePIBList != null)
             {
                 string shipList = string.Join(",", shippinginvoicePIBList.Select(x => x.ShippingInvoiceFk));
-                int logId = shippingRepository.AddLogSTStatusUpdatePSB(shipList.ToString(),
+                int logId = shippingRepository.AddLogStStatusUpdatePsb(shipList.ToString(),
                           "PIBStatusUpdate function Start",
                            0, // shippingInvoice id
                           "STStatusUpdatePSB",
@@ -128,18 +128,18 @@ namespace STStatusUpdatePSB
                 foreach (PSBPIBIssueDetails shipDetails in shippinginvoicePIBList)
                 {
                     // check if all PIB issues resolved
-                    bool isResolved = shippingRepository.CheckIfAllPIBIssuesResolved(shipDetails.ShippingInvoiceFk);
+                    bool isResolved = shippingRepository.CheckIfAllPibIssuesResolved(shipDetails.ShippingInvoiceFk);
                     if (isResolved)
                     {
-                        // if all issues fixed update shippinginvoice
-                        shippingRepository.UpdateShippingInvoicePIBIssuesResolved(shipDetails.ShippingInvoiceFk, false, DateTime.Now);
+                        // if all issues fixed update shipping invoice
+                        shippingRepository.UpdateShippingInvoicePibIssuesResolved(shipDetails.ShippingInvoiceFk, false, DateTime.Now);
 
                         //log
-                        shippingRepository.AddLogTrackPSBPIBIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
+                        shippingRepository.AddLogTrackPsbpibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
                                    , "STStatusUpdatePSB", null, null, null, null, true, null, true,
                                    "PIB issues mark resolved from ST", DateTime.Now);
 
-                        shippingRepository.AddLogSTStatusUpdatePSB(shipList.ToString(),
+                        shippingRepository.AddLogStStatusUpdatePsb(shipList.ToString(),
                          "PIBStatusUpdate In Process For : "+ shipDetails.ShippingInvoiceFk,
                           shipDetails.ShippingInvoiceFk, 
                          "STStatusUpdatePSB",
@@ -148,20 +148,20 @@ namespace STStatusUpdatePSB
 
                         //Updating customer note will remove entry from PTM
                         //CustomerNote_PIBAllResolved = 1 
-                        if (shipDetails.PSBCustomerNoteFk > 0)
+                        if (shipDetails.PsbCustomerNoteFk > 0)
                         {
-                            shippingRepository.UpdateCustomerNoteIssueResolved(shipDetails.PIBCustomerNoteFk, true, DateTime.Now, false);
+                            shippingRepository.UpdateCustomerNoteIssueResolved(shipDetails.PibCustomerNoteFk, true, DateTime.Now, false);
 
                         }
                     }
                     //if all not resolved add log
                     else
                     {
-                        shippingRepository.AddLogTrackPSBPIBIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
+                        shippingRepository.AddLogTrackPsbpibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
                                                       , "STStatusUpdatePSB", null, null, null, null, true, null, false,
                                                       "PIB issues are not all resolved", DateTime.Now);
 
-                        logId = shippingRepository.AddLogSTStatusUpdatePSB(
+                        logId = shippingRepository.AddLogStStatusUpdatePsb(
                                                       shipList.ToString(),
                                                       "PIBStatusUpdate In Process For : " + shipDetails.ShippingInvoiceFk,
                                                       shipDetails.ShippingInvoiceFk,
@@ -170,7 +170,7 @@ namespace STStatusUpdatePSB
                                                       DateTime.Now);
 
                     }
-                    int logIdComplete = shippingRepository.AddLogSTStatusUpdatePSB(
+                    int logIdComplete = shippingRepository.AddLogStStatusUpdatePsb(
                                    shipList.ToString(),
                                   "PIBStatusUpdate",
                                    shipDetails.ShippingInvoiceFk,
@@ -182,7 +182,7 @@ namespace STStatusUpdatePSB
             }
             else
             {
-                int logId = shippingRepository.AddLogSTStatusUpdatePSB("",
+                int logId = shippingRepository.AddLogStStatusUpdatePsb("",
                              "PIBStatusUpdate Skipped",
                              0,
                              "PIBStatusUpdate",

@@ -9,18 +9,18 @@ namespace STStatusUpdatePSB.Abstract
 {
     public interface IShippinginvoiceRepository
     {
-        List<PSBPIBIssueDetails> GetAllPSBIssueActive();
-        bool CheckIfAllPSBIssuesResolved(int shippinginvoiceId);
-        int UpdateShippingInvoicePSBIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved);
+        List<PSBPIBIssueDetails> GetAllPsbIssueActive();
+        bool CheckIfAllPsbIssuesResolved(int shippingInvoiceId);
+        int UpdateShippingInvoicePsbIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved);
 
-        int AddLogTrackPSBPIBIssueLifeCycle(int shippingInvoiceFk, int userAdminfk, string issueCreatedby,
-           bool? isPSBIssueActive, bool? isPIBIssueActive, string psbIssueList, bool? isPSBResolved,
-           bool? pibIssueActive, string pibIssueList, bool? isPIBResolved, string comment, DateTime dateCreated);
+        int AddLogTrackPsbpibIssueLifeCycle(int shippingInvoiceFk, int userAdminfk, string issueCreatedBy,
+           bool? isPsbIssueActive, bool? isPibIssueActive, string psbIssueList, bool? isPsbResolved,
+           bool? pibIssueActive, string pibIssueList, bool? isPibResolved, string comment, DateTime dateCreated);
       
-        List<PSBPIBIssueDetails> GetAllPIBIssueActive();
-        bool CheckIfAllPIBIssuesResolved(int shippinginvoiceId);
-        int UpdateShippingInvoicePIBIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved);
-        int AddLogSTStatusUpdatePSB(string shippinginvoiceList, string actionName, int shippingInvoiceFk, string runFrom, string message, DateTime dateCreated);
-        int UpdateCustomerNoteIssueResolved(int customerNoteFk, bool isallResolved, DateTime dateResolved, bool IsPSBCustomerNote );
+        List<PSBPIBIssueDetails> GetAllPibIssueActive();
+        bool CheckIfAllPibIssuesResolved(int shippingInvoiceId);
+        int UpdateShippingInvoicePibIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved);
+        int AddLogStStatusUpdatePsb(string shippinginvoiceList, string actionName, int shippingInvoiceFk, string runFrom, string message, DateTime dateCreated);
+        int UpdateCustomerNoteIssueResolved(int customerNoteFk, bool isAllResolved, DateTime dateResolved, bool isPsbCustomerNote );
     }
 }
