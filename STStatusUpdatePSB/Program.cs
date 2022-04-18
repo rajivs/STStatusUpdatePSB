@@ -12,7 +12,7 @@ namespace STStatusUpdatePSB
         static void Main(string[] args)
         {
             PsbStatusUpdate();
-            PibStatusUpdate();
+           // PibStatusUpdate();
         }
 
         public static void PsbStatusUpdate()
@@ -91,7 +91,7 @@ namespace STStatusUpdatePSB
                                      shipList.ToString(),
                                     "PSBStatusUpdate",
                                      shipDetails.ShippingInvoiceFk,
-                                    "PSBStatusUpdate",
+                                    "STStatusUpdatePSB",
                                     "PSBStatusUpdate Completed for" + shipDetails.ShippingInvoiceFk,
                                     DateTime.Now);
                 }
@@ -174,8 +174,8 @@ namespace STStatusUpdatePSB
                                    shipList.ToString(),
                                   "PIBStatusUpdate",
                                    shipDetails.ShippingInvoiceFk,
-                                  "PSBStatusUpdate",
-                                  "PIBStatusUpdate Completed for"+ shipDetails.ShippingInvoiceFk,
+                                  "STStatusUpdatePSB",
+                                  "PIBStatusUpdate Completed for "+ shipDetails.ShippingInvoiceFk,
                                   DateTime.Now);
                 }
                
