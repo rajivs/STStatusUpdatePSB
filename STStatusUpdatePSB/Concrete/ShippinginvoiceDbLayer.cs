@@ -32,12 +32,12 @@ namespace STStatusUpdatePSB.Concrete
         {
             try
             {
-                SqlParameter[] paramCollection = SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_be_CheckIfAllPSBIssuesResolved", true);
+                SqlParameter[] paramCollection = SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_ST_CheckIfAllPSBIssuesResolved]", true);
 
                 paramCollection[1].Value = shippingInvoiceId;
                 paramCollection[2].Value = null; // true/false
 
-                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_be_CheckIfAllPSBIssuesResolved", paramCollection);
+                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_ST_CheckIfAllPSBIssuesResolved]", paramCollection);
 
                 var value = paramCollection[2].Value;
                 return value != null && Convert.ToBoolean(value.ToString());
@@ -52,7 +52,7 @@ namespace STStatusUpdatePSB.Concrete
         {
             try
             {
-                SqlParameter[] paramCollection = SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_be_UpdateShippingInvoicePSBIssuesResolved", true);
+                SqlParameter[] paramCollection = SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_ST_UpdateShippingInvoicePSBIssuesResolved", true);
 
                 paramCollection[1].Value = shippingInvoiceFk;
                 paramCollection[2].Value = psbIssueActive;
@@ -60,7 +60,7 @@ namespace STStatusUpdatePSB.Concrete
                 paramCollection[4].Value = null; // UpdateStatus
                 paramCollection[5].Value = null; // Message
 
-                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_be_UpdateShippingInvoicePSBIssuesResolved", paramCollection);
+                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_ST_UpdateShippingInvoicePSBIssuesResolved", paramCollection);
 
                 var updateStatus = Convert.ToInt32(paramCollection[4].Value.ToString());
                 var message = paramCollection[5].Value.ToString();
@@ -127,12 +127,12 @@ namespace STStatusUpdatePSB.Concrete
         {
             try
             {
-                SqlParameter[] paramCollection = SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_be_CheckIfAllPIBIssuesResolved", true);
+                SqlParameter[] paramCollection = SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_ST_CheckIfAllPIBIssuesResolved", true);
 
                 paramCollection[1].Value = shippinginvoiceId;
                 paramCollection[2].Value = null; // true/false
 
-                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_be_CheckIfAllPIBIssuesResolved", paramCollection);
+                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_ST_CheckIfAllPIBIssuesResolved", paramCollection);
 
                 var value = paramCollection[2].Value;
                 return value != null && Convert.ToBoolean(value.ToString());
@@ -147,7 +147,7 @@ namespace STStatusUpdatePSB.Concrete
         {
             try
             {
-                SqlParameter[] paramCollection = SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_be_UpdateShippingInvoicePIBIssuesResolved", true);
+                SqlParameter[] paramCollection = SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_ST_UpdateShippingInvoicePIBIssuesResolved", true);
 
                 paramCollection[1].Value = shippingInvoiceFk;
                 paramCollection[2].Value = psbIssueActive;
@@ -155,7 +155,7 @@ namespace STStatusUpdatePSB.Concrete
                 paramCollection[4].Value = null; // UpdateStatus
                 paramCollection[5].Value = null; // Message
 
-                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_be_UpdateShippingInvoicePIBIssuesResolved", paramCollection);
+                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_ST_UpdateShippingInvoicePIBIssuesResolved", paramCollection);
 
                 var updateStatus = Convert.ToInt32(paramCollection[4].Value.ToString());
                 var message = paramCollection[5].Value.ToString();
