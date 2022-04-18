@@ -20,7 +20,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive();
+            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(0,0);
 
             if (shippingInvoiceList != null)
             {
@@ -40,7 +40,7 @@ namespace STStatusUpdatePSB
                                   "Task In Process For : " + shipDetails.ShippingInvoiceFk,
                                   shipDetails.ShippingInvoiceFk,
                                   "STStatusUpdatePSB",
-                                  "PSBStatusUpdate  in progress",
+                                  "PSBStatusUpdate checking",
                                   DateTime.Now);
 
                     // check if all PSB issues resolved
@@ -102,7 +102,7 @@ namespace STStatusUpdatePSB
                 int logId = shippingRepository.AddLogStStatusUpdatePsb("",
                              "PSBStatusUpdate Skipped",
                              0,
-                             "PSBStatusUpdate",
+                             "STStatusUpdatePSB",
                              "No Records found",
                              DateTime.Now);
             }
@@ -113,7 +113,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive();
+            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive(0,0);
 
             if (shippinginvoicePIBList != null)
             {
@@ -185,7 +185,7 @@ namespace STStatusUpdatePSB
                 int logId = shippingRepository.AddLogStStatusUpdatePsb("",
                              "PIBStatusUpdate Skipped",
                              0,
-                             "PIBStatusUpdate",
+                             "STStatusUpdatePSB",
                              "No Records found",
                              DateTime.Now);
             }

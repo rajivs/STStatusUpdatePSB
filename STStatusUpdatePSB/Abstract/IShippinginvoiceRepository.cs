@@ -9,7 +9,7 @@ namespace STStatusUpdatePSB.Abstract
 {
     public interface IShippingInvoiceRepository
     {
-        List<PsbPibIssueDetails> GetAllPsbIssueActive();
+        List<PsbPibIssueDetails> GetAllPsbIssueActive(int shipId , int numofRecords);
         bool CheckIfAllPsbIssuesResolved(int shippingInvoiceId);
         int UpdateShippingInvoicePsbIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved);
 
@@ -17,7 +17,7 @@ namespace STStatusUpdatePSB.Abstract
            bool? isPsbIssueActive, bool? isPibIssueActive, string psbIssueList, bool? isPsbResolved,
            bool? pibIssueActive, string pibIssueList, bool? isPibResolved, string comment, DateTime dateCreated);
       
-        List<PsbPibIssueDetails> GetAllPibIssueActive();
+        List<PsbPibIssueDetails> GetAllPibIssueActive(int shipId, int numofRecords);
         bool CheckIfAllPibIssuesResolved(int shippingInvoiceId);
         int UpdateShippingInvoicePibIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved);
         int AddLogStStatusUpdatePsb(string shippingInvoiceList, string actionName, int shippingInvoiceFk, string runFrom, string message, DateTime dateCreated);

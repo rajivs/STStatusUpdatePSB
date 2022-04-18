@@ -15,11 +15,11 @@ namespace STStatusUpdatePSB.Concrete
         readonly string _sCon = ConfigurationManager.ConnectionStrings["Connection"].ToString();
         DataSet _ds;
 
-        public DataSet GetAllPsbIssueActive()
+        public DataSet GetAllPsbIssueActive(int shipId, int numofRecords)
         {
             try
             {
-                _ds = SqlHelper.ExecuteDataset(_sCon, "usp_ST_GetAllPSBIssueActiveShippingInvoice");
+                _ds = SqlHelper.ExecuteDataset(_sCon, "usp_ST_GetAllPSBIssueActiveShippingInvoice",  shipId, numofRecords);
             }
             catch (Exception ex)
             {
@@ -32,12 +32,12 @@ namespace STStatusUpdatePSB.Concrete
         {
             try
             {
-                SqlParameter[] paramCollection = SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_ST_CheckIfAllPSBIssuesResolved]", true);
+                SqlParameter[] paramCollection = SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_ST_CheckIfAllPSBIssuesResolved", true);
 
                 paramCollection[1].Value = shippingInvoiceId;
                 paramCollection[2].Value = null; // true/false
 
-                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_ST_CheckIfAllPSBIssuesResolved]", paramCollection);
+                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_ST_CheckIfAllPSBIssuesResolved", paramCollection);
 
                 var value = paramCollection[2].Value;
                 return value != null && Convert.ToBoolean(value.ToString());
@@ -110,11 +110,11 @@ namespace STStatusUpdatePSB.Concrete
                 throw ex;
             }
         }
-        public DataSet GetAllPibIssueActive()
+        public DataSet GetAllPibIssueActive(int shipId, int numofRecords)
         {
             try
             {
-                _ds = SqlHelper.ExecuteDataset(_sCon, "usp_ST_GetAllPIBIssueActiveShippingInvoice");
+                _ds = SqlHelper.ExecuteDataset(_sCon, "usp_ST_GetAllPIBIssueActiveShippingInvoice" ,shipId,  numofRecords);
             }
             catch (Exception ex)
             {

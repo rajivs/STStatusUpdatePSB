@@ -15,9 +15,9 @@ namespace STStatusUpdatePSB.Concrete
 
         private readonly ShippingInvoiceDbLayer _shippingInvoiceDbl = new ShippingInvoiceDbLayer();
 
-        public List<PsbPibIssueDetails> GetAllPsbIssueActive()
+        public List<PsbPibIssueDetails> GetAllPsbIssueActive(int shipId, int numofRecords)
         {
-            DataSet dsPsbIssues = _shippingInvoiceDbl.GetAllPsbIssueActive();
+            DataSet dsPsbIssues = _shippingInvoiceDbl.GetAllPsbIssueActive(shipId, numofRecords);
             
             List<PsbPibIssueDetails> psbIssuesList = null;
             if (dsPsbIssues != null)
@@ -59,9 +59,9 @@ namespace STStatusUpdatePSB.Concrete
             return newLogId;
 
         }
-        public List<PsbPibIssueDetails> GetAllPibIssueActive()
+        public List<PsbPibIssueDetails> GetAllPibIssueActive(int shipId, int numofRecords)
         {
-            DataSet dsPsbIssues = _shippingInvoiceDbl.GetAllPibIssueActive();
+            DataSet dsPsbIssues = _shippingInvoiceDbl.GetAllPibIssueActive(shipId, numofRecords);
 
             List<PsbPibIssueDetails> psbIssuesList = null;
             if (dsPsbIssues != null)
