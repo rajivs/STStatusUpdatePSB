@@ -5,6 +5,8 @@ using STStatusUpdatePSB.Entities;
 using System.Text;
 using System.Collections.Generic;
 using System.Linq;
+using STStatusUpdatePSB.Helpers;
+
 namespace STStatusUpdatePSB
 {
     class Program
@@ -20,7 +22,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(0,0);
+            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(0, SiteConfigurationWc.ProcessCount);
 
             if (shippingInvoiceList != null)
             {
@@ -113,7 +115,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive(0,0);
+            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive(0, SiteConfigurationWc.ProcessCount);
 
             if (shippinginvoicePIBList != null)
             {
