@@ -94,7 +94,7 @@ namespace STStatusUpdatePSB
                                     "PSBStatusUpdate",
                                      shipDetails.ShippingInvoiceFk,
                                     "STStatusUpdatePSB",
-                                    "PSBStatusUpdate Completed for" + shipDetails.ShippingInvoiceFk,
+                                    "PSBStatusUpdate Completed for " + shipDetails.ShippingInvoiceFk,
                                     DateTime.Now);
                 }
               
