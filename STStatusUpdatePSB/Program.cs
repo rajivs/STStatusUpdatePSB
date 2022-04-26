@@ -150,7 +150,7 @@ namespace STStatusUpdatePSB
 
                         //Updating customer note will remove entry from PTM
                         //CustomerNote_PIBAllResolved = 1 
-                        if (shipDetails.PsbCustomerNoteFk > 0)
+                        if (shipDetails.PibCustomerNoteFk > 0)
                         {
                             shippingRepository.UpdateCustomerNoteIssueResolved(shipDetails.PibCustomerNoteFk, true, DateTime.Now, false);
 
