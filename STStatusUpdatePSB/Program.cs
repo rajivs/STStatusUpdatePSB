@@ -13,8 +13,8 @@ namespace STStatusUpdatePSB
     {
         static void Main(string[] args)
         {
-            PsbStatusUpdate();
-           // PibStatusUpdate();
+          //  PsbStatusUpdate();
+            PibStatusUpdate();
         }
 
         public static void PsbStatusUpdate()
@@ -22,7 +22,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(0, SiteConfigurationWc.ProcessCount);
+            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(6738812, SiteConfigurationWc.ProcessCount);
 
             if (shippingInvoiceList != null)
             {
@@ -76,8 +76,10 @@ namespace STStatusUpdatePSB
                     //if all not resolved add log
                     else
                     {
+                        Issues issueList = shippingRepository.GetPrescreenIssueList(shipDetails.ShippingInvoiceFk);
+
                         shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
-                                                      , "STStatusUpdatePSB", true, null, null, false, null, null, null,
+                                                      , "STStatusUpdatePSB", true, null, issueList.PrescreenIssueList, false, null, null, null,
                                                       "PSB issues are not all resolved", DateTime.Now);
 
                         logId = shippingRepository.AddLogStStatusUpdatePsb(
@@ -115,7 +117,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive(0, SiteConfigurationWc.ProcessCount);
+            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive(6737652, SiteConfigurationWc.ProcessCount);
 
             if (shippinginvoicePIBList != null)
             {
@@ -159,8 +161,10 @@ namespace STStatusUpdatePSB
                     //if all not resolved add log
                     else
                     {
+                        Issues issueList = shippingRepository.GetPibIssueList(shipDetails.ShippingInvoiceFk);
+
                         shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
-                                                      , "STStatusUpdatePSB", null, null, null, null, true, null, false,
+                                                      , "STStatusUpdatePSB", null, null,null, null, true , issueList.PibIssueList, false,
                                                       "PIB issues are not all resolved", DateTime.Now);
 
                         logId = shippingRepository.AddLogStStatusUpdatePsb(

@@ -102,5 +102,41 @@ namespace STStatusUpdatePSB.Concrete
             int updateStatus = _shippingInvoiceDbl.UpdateCustomerNoteIssueResolved( customerNoteFk, isAllResolved, dateResolved, IsPSBCustomerNote);
             return updateStatus;
         }
+        public Issues GetPrescreenIssueList(int shippingInvoiceId)
+        {
+            DataSet dsIssueList = _shippingInvoiceDbl.GetPrescreenIssueList(shippingInvoiceId);
+
+            Issues issueList = null;
+
+            if (dsIssueList.Tables[0].Rows.Count > 0)
+            {
+                issueList =
+                    dsIssueList.Tables[0].AsEnumerable()
+                        .Select(row => new Issues
+                        {
+                            PrescreenIssueList = row.Field<string>("issueList"),
+                        }).ToList().FirstOrDefault();
+
+            }
+            return issueList;
+        }
+        public Issues GetPibIssueList(int shippingInvoiceId)
+        {
+            DataSet dsIssueList = _shippingInvoiceDbl.GetPibIssueList(shippingInvoiceId);
+
+            Issues issueList = null;
+
+            if (dsIssueList.Tables[0].Rows.Count > 0)
+            {
+                issueList =
+                    dsIssueList.Tables[0].AsEnumerable()
+                        .Select(row => new Issues
+                        {
+                            PibIssueList = row.Field<string>("issueList"),
+                        }).ToList().FirstOrDefault();
+
+            }
+            return issueList;
+        }
     }
 }
