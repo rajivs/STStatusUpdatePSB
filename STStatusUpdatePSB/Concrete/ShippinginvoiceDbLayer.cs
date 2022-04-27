@@ -223,5 +223,31 @@ namespace STStatusUpdatePSB.Concrete
                 throw ex;
             }
         }
+        public DataSet GetPrescreenIssueList(int shippingInvoiceId)
+        {
+            try
+            {
+                _ds = SqlHelper.ExecuteDataset(_sCon, "usp_ST_PrescreenIssueList", shippingInvoiceId);
+            }
+            catch (Exception ex)
+            {
+                _ds = null;
+                throw ex;
+            }
+            return _ds;
+        }
+        public DataSet GetPibIssueList(int shippingInvoiceId)
+        {
+            try
+            {
+                _ds = SqlHelper.ExecuteDataset(_sCon, "usp_ST_PibIssueList", shippingInvoiceId);
+            }
+            catch (Exception ex)
+            {
+                _ds = null;
+                throw ex;
+            }
+            return _ds;
+        }
     }
 }

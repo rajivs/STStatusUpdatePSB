@@ -13,7 +13,7 @@ namespace STStatusUpdatePSB
     {
         static void Main(string[] args)
         {
-           // PsbStatusUpdate();
+          //  PsbStatusUpdate();
             PibStatusUpdate();
         }
 
@@ -22,7 +22,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(6738742, SiteConfigurationWc.ProcessCount);
+            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(6738812, SiteConfigurationWc.ProcessCount);
 
             if (shippingInvoiceList != null)
             {
@@ -76,8 +76,10 @@ namespace STStatusUpdatePSB
                     //if all not resolved add log
                     else
                     {
+                        Issues issueList = shippingRepository.GetPrescreenIssueList(shipDetails.ShippingInvoiceFk);
+
                         shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
-                                                      , "STStatusUpdatePSB", true, null, null, false, null, null, null,
+                                                      , "STStatusUpdatePSB", true, null, issueList.PrescreenIssueList, false, null, null, null,
                                                       "PSB issues are not all resolved", DateTime.Now);
 
                         logId = shippingRepository.AddLogStStatusUpdatePsb(
@@ -115,7 +117,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive(6738742, SiteConfigurationWc.ProcessCount);
+            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive(6737652, SiteConfigurationWc.ProcessCount);
 
             if (shippinginvoicePIBList != null)
             {
@@ -150,7 +152,7 @@ namespace STStatusUpdatePSB
 
                         //Updating customer note will remove entry from PTM
                         //CustomerNote_PIBAllResolved = 1 
-                        if (shipDetails.PsbCustomerNoteFk > 0)
+                        if (shipDetails.PibCustomerNoteFk > 0)
                         {
                             shippingRepository.UpdateCustomerNoteIssueResolved(shipDetails.PibCustomerNoteFk, true, DateTime.Now, false);
 
@@ -159,8 +161,10 @@ namespace STStatusUpdatePSB
                     //if all not resolved add log
                     else
                     {
+                        Issues issueList = shippingRepository.GetPibIssueList(shipDetails.ShippingInvoiceFk);
+
                         shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
-                                                      , "STStatusUpdatePSB", null, null, null, null, true, null, false,
+                                                      , "STStatusUpdatePSB", null, null,null, null, true , issueList.PibIssueList, false,
                                                       "PIB issues are not all resolved", DateTime.Now);
 
                         logId = shippingRepository.AddLogStStatusUpdatePsb(
