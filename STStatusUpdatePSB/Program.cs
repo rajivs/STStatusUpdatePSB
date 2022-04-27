@@ -13,8 +13,8 @@ namespace STStatusUpdatePSB
     {
         static void Main(string[] args)
         {
-            PsbStatusUpdate();
-           // PibStatusUpdate();
+           // PsbStatusUpdate();
+            PibStatusUpdate();
         }
 
         public static void PsbStatusUpdate()
@@ -22,7 +22,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(0, SiteConfigurationWc.ProcessCount);
+            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(6738742, SiteConfigurationWc.ProcessCount);
 
             if (shippingInvoiceList != null)
             {
@@ -115,7 +115,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive(0, SiteConfigurationWc.ProcessCount);
+            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive(6738742, SiteConfigurationWc.ProcessCount);
 
             if (shippinginvoicePIBList != null)
             {
