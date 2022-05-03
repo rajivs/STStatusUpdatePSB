@@ -164,7 +164,7 @@ namespace STStatusUpdatePSB
                         Issues issueList = shippingRepository.GetPibIssueList(shipDetails.ShippingInvoiceFk);
 
                         shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
-                                                      , "STStatusUpdatePSB", null, null,null, null, true , issueList.PibIssueList, false,
+                                                      , "STStatusUpdatePSB", null, null,null, null, true , issueList.PibIssueList ?? "", false,
                                                       "PIB issues are not all resolved", DateTime.Now);
 
                         logId = shippingRepository.AddLogStStatusUpdatePsb(
