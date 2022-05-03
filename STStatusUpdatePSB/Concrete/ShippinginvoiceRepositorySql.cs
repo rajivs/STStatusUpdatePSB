@@ -108,7 +108,7 @@ namespace STStatusUpdatePSB.Concrete
 
             Issues issueList = null;
 
-            if (dsIssueList.Tables[0].Rows.Count > 0)
+            if (dsIssueList != null && dsIssueList.Tables[0].Rows.Count > 0)
             {
                 issueList =
                     dsIssueList.Tables[0].AsEnumerable()
@@ -126,7 +126,7 @@ namespace STStatusUpdatePSB.Concrete
 
             Issues issueList = null;
 
-            if (dsIssueList.Tables[0].Rows.Count > 0)
+            if (dsIssueList != null && dsIssueList.Tables[0].Rows.Count > 0)
             {
                 issueList =
                     dsIssueList.Tables[0].AsEnumerable()
