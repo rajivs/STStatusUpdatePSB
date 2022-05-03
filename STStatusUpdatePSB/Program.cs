@@ -13,7 +13,7 @@ namespace STStatusUpdatePSB
     {
         static void Main(string[] args)
         {
-          //  PsbStatusUpdate();
+            PsbStatusUpdate();
             PibStatusUpdate();
         }
 
@@ -22,7 +22,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(6738812, SiteConfigurationWc.ProcessCount);
+            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(0, SiteConfigurationWc.ProcessCount);
 
             if (shippingInvoiceList != null)
             {
@@ -117,11 +117,11 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippinginvoicePIBList = shippingRepository.GetAllPibIssueActive(6737652, SiteConfigurationWc.ProcessCount);
+            List<PsbPibIssueDetails> shippinginvoicePibList = shippingRepository.GetAllPibIssueActive(0, SiteConfigurationWc.ProcessCount);
 
-            if (shippinginvoicePIBList != null)
+            if (shippinginvoicePibList != null)
             {
-                string shipList = string.Join(",", shippinginvoicePIBList.Select(x => x.ShippingInvoiceFk));
+                string shipList = string.Join(",", shippinginvoicePibList.Select(x => x.ShippingInvoiceFk));
                 int logId = shippingRepository.AddLogStStatusUpdatePsb(shipList.ToString(),
                           "PIBStatusUpdate function Start",
                            0, // shippingInvoice id
@@ -129,7 +129,7 @@ namespace STStatusUpdatePSB
                           "PIBStatusUpdate Started",
                           DateTime.Now);
 
-                foreach (PsbPibIssueDetails shipDetails in shippinginvoicePIBList)
+                foreach (PsbPibIssueDetails shipDetails in shippinginvoicePibList)
                 {
                     // check if all PIB issues resolved
                     bool isResolved = shippingRepository.CheckIfAllPibIssuesResolved(shipDetails.ShippingInvoiceFk);
