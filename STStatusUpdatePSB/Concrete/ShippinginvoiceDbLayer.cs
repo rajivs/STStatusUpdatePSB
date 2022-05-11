@@ -249,5 +249,59 @@ namespace STStatusUpdatePSB.Concrete
             }
             return _ds;
         }
+
+        // increment attempt count for psb check
+        public int UpdatePsbAttemptCount(int shippingInvoiceFk, DateTime dateUpdated)
+        {
+            try
+            {
+                SqlParameter[] paramCollection =
+                    SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_ST_UpdatePSBAttemptCount", true);
+
+                paramCollection[1].Value = shippingInvoiceFk;
+                paramCollection[2].Value = dateUpdated;
+                paramCollection[3].Value = null; // UpdateStatus
+                paramCollection[4].Value = null; // Message
+
+                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_ST_UpdatePSBAttemptCount",
+                    paramCollection);
+
+                var updateStatus = Convert.ToInt32(paramCollection[3].Value.ToString());
+                var message = paramCollection[4].Value.ToString();
+
+                return updateStatus;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        // increment attempt count for pib check
+        public int UpdatePibAttemptCount(int shippingInvoiceFk, DateTime dateUpdated)
+        {
+            try
+            {
+                SqlParameter[] paramCollection =
+                    SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_ST_UpdatePIBAttemptCount", true);
+
+                paramCollection[1].Value = shippingInvoiceFk;
+                paramCollection[2].Value = dateUpdated;
+                paramCollection[3].Value = null; // UpdateStatus
+                paramCollection[4].Value = null; // Message
+
+                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_ST_UpdatePIBAttemptCount",
+                    paramCollection);
+
+                var updateStatus = Convert.ToInt32(paramCollection[3].Value.ToString());
+                var message = paramCollection[4].Value.ToString();
+
+                return updateStatus;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

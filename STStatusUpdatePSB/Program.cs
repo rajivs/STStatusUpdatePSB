@@ -72,6 +72,11 @@ namespace STStatusUpdatePSB
                             shippingRepository.UpdateCustomerNoteIssueResolved(shipDetails.PsbCustomerNoteFk, true, DateTime.Now, true);
 
                         }
+
+                        // update PSB attempt count
+                        shippingRepository.UpdatePsbAttemptCount(shipDetails.ShippingInvoiceFk,  DateTime.Now);
+
+
                     }
                     //if all not resolved add log
                     else
@@ -90,6 +95,9 @@ namespace STStatusUpdatePSB
                                                         "PSB issues are not all resolved",
                                                         DateTime.Now);
 
+                        // update PSB attempt count
+                        shippingRepository.UpdatePsbAttemptCount(shipDetails.ShippingInvoiceFk, DateTime.Now);
+
                     }
                     int logIdComplete = shippingRepository.AddLogStStatusUpdatePsb(
                                      shipList.ToString(),
@@ -100,6 +108,7 @@ namespace STStatusUpdatePSB
                                     DateTime.Now);
                 }
               
+                // update attempt count for all ship id processed
             }
             else
             {
@@ -157,6 +166,9 @@ namespace STStatusUpdatePSB
                             shippingRepository.UpdateCustomerNoteIssueResolved(shipDetails.PibCustomerNoteFk, true, DateTime.Now, false);
 
                         }
+
+                        // update PIB attempt count
+                        shippingRepository.UpdatePibAttemptCount(shipDetails.ShippingInvoiceFk, DateTime.Now);
                     }
                     //if all not resolved add log
                     else
@@ -175,6 +187,8 @@ namespace STStatusUpdatePSB
                                                       "PIB issues are not all resolved",
                                                       DateTime.Now);
 
+                        // update PIB attempt count
+                        shippingRepository.UpdatePibAttemptCount(shipDetails.ShippingInvoiceFk, DateTime.Now);
                     }
                     int logIdComplete = shippingRepository.AddLogStStatusUpdatePsb(
                                    shipList.ToString(),

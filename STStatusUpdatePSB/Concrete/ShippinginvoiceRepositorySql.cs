@@ -138,5 +138,18 @@ namespace STStatusUpdatePSB.Concrete
             }
             return issueList;
         }
+        // increment attempt count for psb check
+        public int UpdatePsbAttemptCount(int shippingInvoiceFk, DateTime dateUpdated)
+        {
+            var updateStatus = _shippingInvoiceDbl.UpdatePsbAttemptCount(shippingInvoiceFk, dateUpdated);
+            return updateStatus;
+        }
+
+        // increment attempt count for pib check
+        public int UpdatePibAttemptCount(int shippingInvoiceFk, DateTime dateUpdated)
+        {
+            var updateStatus = _shippingInvoiceDbl.UpdatePibAttemptCount(shippingInvoiceFk, dateUpdated);
+            return updateStatus;
+        }
     }
 }

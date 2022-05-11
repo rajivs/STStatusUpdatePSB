@@ -24,5 +24,7 @@ namespace STStatusUpdatePSB.Abstract
         int UpdateCustomerNoteIssueResolved(int customerNoteFk, bool isAllResolved, DateTime dateResolved, bool isPsbCustomerNote );
         Issues GetPrescreenIssueList(int shippingInvoiceId);
         Issues GetPibIssueList(int shippingInvoiceId);
+        int UpdatePsbAttemptCount(int shippingInvoiceFk, DateTime dateUpdated);
+        int UpdatePibAttemptCount(int shippingInvoiceFk, DateTime dateUpdated);
     }
 }
