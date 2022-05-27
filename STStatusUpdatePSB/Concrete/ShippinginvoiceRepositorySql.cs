@@ -29,6 +29,7 @@ namespace STStatusUpdatePSB.Concrete
                             .Select(row => new PsbPibIssueDetails
                             {
                                 ShippingInvoiceFk = Convert.IsDBNull(row.Field<object>("shippinginvoice_Id")) ? 0 : Convert.ToInt32(row.Field<object>("shippinginvoice_Id")),
+                                OrderInvoiceId = Convert.IsDBNull(row.Field<object>("Shippinginvoice_Orderinvoice_Fk")) ? 0 : Convert.ToInt32(row.Field<object>("Shippinginvoice_Orderinvoice_Fk")),
                                 PibCustomerNoteFk = Convert.IsDBNull(row.Field<object>("shippinginvoice_PIBCustomerNote_Fk")) ? 0 : Convert.ToInt32(row.Field<object>("shippinginvoice_PIBCustomerNote_Fk")),
                                 PsbCustomerNoteFk = Convert.IsDBNull(row.Field<object>("shippinginvoice_PSBCustomerNote_Fk")) ? 0 : Convert.ToInt32(row.Field<object>("shippinginvoice_PSBCustomerNote_Fk")),
 
@@ -102,7 +103,7 @@ namespace STStatusUpdatePSB.Concrete
             int updateStatus = _shippingInvoiceDbl.UpdateCustomerNoteIssueResolved( customerNoteFk, isAllResolved, dateResolved, IsPSBCustomerNote);
             return updateStatus;
         }
-        public Issues GetPrescreenIssueList(int shippingInvoiceId)
+        public Issues GetPreScreenIssueList(int shippingInvoiceId)
         {
             DataSet dsIssueList = _shippingInvoiceDbl.GetPrescreenIssueList(shippingInvoiceId);
 
@@ -149,6 +150,12 @@ namespace STStatusUpdatePSB.Concrete
         public int UpdatePibAttemptCount(int shippingInvoiceFk, DateTime dateUpdated)
         {
             var updateStatus = _shippingInvoiceDbl.UpdatePibAttemptCount(shippingInvoiceFk, dateUpdated);
+            return updateStatus;
+        }
+
+        public int UpdateClearPreScreenFollowupNotes(int orderInvoiceId, int reasonFk)
+        {
+            var updateStatus = _shippingInvoiceDbl.UpdateClearPreScreenFollowupNotes(orderInvoiceId, reasonFk);
             return updateStatus;
         }
     }

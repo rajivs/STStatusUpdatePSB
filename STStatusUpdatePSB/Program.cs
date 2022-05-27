@@ -52,6 +52,9 @@ namespace STStatusUpdatePSB
                         // if all fixed update shipping invoice
                         shippingRepository.UpdateShippingInvoicePsbIssuesResolved(shipDetails.ShippingInvoiceFk, false, DateTime.Now);
 
+                        // clear follow ups assigned for pre screen 
+
+                        shippingRepository.UpdateClearPreScreenFollowupNotes(shipDetails.OrderInvoiceId, 25);
                         //log
                         shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
                                    , "STStatusUpdatePSB", false, false, null, true, false, null, false,
@@ -81,7 +84,7 @@ namespace STStatusUpdatePSB
                     //if all not resolved add log
                     else
                     {
-                        Issues issueList = shippingRepository.GetPrescreenIssueList(shipDetails.ShippingInvoiceFk);
+                        Issues issueList = shippingRepository.GetPreScreenIssueList(shipDetails.ShippingInvoiceFk);
 
                         shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
                                                       , "STStatusUpdatePSB", true, null, issueList.PrescreenIssueList, false, null, null, null,

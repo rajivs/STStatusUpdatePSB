@@ -303,5 +303,31 @@ namespace STStatusUpdatePSB.Concrete
                 throw ex;
             }
         }
+
+        public int UpdateClearPreScreenFollowupNotes(int orderInvoiceId, int reasonFk)
+        {
+            try
+            {
+                SqlParameter[] paramCollection =
+                    SqlHelperParameterCache.GetSpParameterSet(_sCon, "usp_ST_UpdateClearPreScreenFollowupNotes", true);
+
+                paramCollection[1].Value = orderInvoiceId;
+                paramCollection[2].Value = reasonFk;
+                paramCollection[3].Value = null; // UpdateStatus
+                paramCollection[4].Value = null; // Message
+
+                SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_ST_UpdateClearPreScreenFollowupNotes",
+                    paramCollection);
+
+                var updateStatus = Convert.ToInt32(paramCollection[3].Value.ToString());
+                var message = paramCollection[4].Value.ToString();
+
+                return updateStatus;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

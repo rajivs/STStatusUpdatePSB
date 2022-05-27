@@ -22,9 +22,10 @@ namespace STStatusUpdatePSB.Abstract
         int UpdateShippingInvoicePibIssuesResolved(int shippingInvoiceFk, bool psbIssueActive, DateTime dateResolved);
         int AddLogStStatusUpdatePsb(string shippingInvoiceList, string actionName, int shippingInvoiceFk, string runFrom, string message, DateTime dateCreated);
         int UpdateCustomerNoteIssueResolved(int customerNoteFk, bool isAllResolved, DateTime dateResolved, bool isPsbCustomerNote );
-        Issues GetPrescreenIssueList(int shippingInvoiceId);
+        Issues GetPreScreenIssueList(int shippingInvoiceId);
         Issues GetPibIssueList(int shippingInvoiceId);
         int UpdatePsbAttemptCount(int shippingInvoiceFk, DateTime dateUpdated);
         int UpdatePibAttemptCount(int shippingInvoiceFk, DateTime dateUpdated);
+        int UpdateClearPreScreenFollowupNotes(int orderInvoiceId, int reasonFk);
     }
 }

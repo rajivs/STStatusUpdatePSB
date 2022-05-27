@@ -9,5 +9,6 @@ namespace STStatusUpdatePSB.Entities
         public int ShippingInvoiceFk{ get; set; }
         public int PsbCustomerNoteFk { get; set; }
         public int PibCustomerNoteFk { get; set; }
+        public int OrderInvoiceId { get; set; }
     }
 }
