@@ -304,7 +304,7 @@ namespace STStatusUpdatePSB.Concrete
             }
         }
 
-        public int UpdateClearPreScreenFollowupNotes(int orderInvoiceId, int reasonFk)
+        public int UpdateClearPreScreenFollowupNotes(int orderInvoiceId, int reasonFk, DateTime dateUpdated)
         {
             try
             {
@@ -313,14 +313,15 @@ namespace STStatusUpdatePSB.Concrete
 
                 paramCollection[1].Value = orderInvoiceId;
                 paramCollection[2].Value = reasonFk;
-                paramCollection[3].Value = null; // UpdateStatus
-                paramCollection[4].Value = null; // Message
+                paramCollection[3].Value = dateUpdated;
+                paramCollection[4].Value = null; // UpdateStatus
+                paramCollection[5].Value = null; // Message
 
                 SqlHelper.ExecuteNonQuery(_sCon, CommandType.StoredProcedure, "usp_ST_UpdateClearPreScreenFollowupNotes",
                     paramCollection);
 
-                var updateStatus = Convert.ToInt32(paramCollection[3].Value.ToString());
-                var message = paramCollection[4].Value.ToString();
+                var updateStatus = Convert.ToInt32(paramCollection[4].Value.ToString());
+                var message = paramCollection[5].Value.ToString();
 
                 return updateStatus;
             }

@@ -14,7 +14,7 @@ namespace STStatusUpdatePSB
         static void Main(string[] args)
         {
             PsbStatusUpdate();
-            PibStatusUpdate();
+          //  PibStatusUpdate();
         }
 
         public static void PsbStatusUpdate()
@@ -22,7 +22,7 @@ namespace STStatusUpdatePSB
 
             IShippingInvoiceRepository shippingRepository = new ShippingInvoiceRepositorySql();
             // get shipping invoice with PSBIssueActive = 1
-            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(0, SiteConfigurationWc.ProcessCount);
+            List<PsbPibIssueDetails> shippingInvoiceList = shippingRepository.GetAllPsbIssueActive(6739182, SiteConfigurationWc.ProcessCount);
 
             if (shippingInvoiceList != null)
             {
@@ -54,7 +54,7 @@ namespace STStatusUpdatePSB
 
                         // clear follow ups assigned for pre screen 
 
-                        shippingRepository.UpdateClearPreScreenFollowupNotes(shipDetails.OrderInvoiceId, 25);
+                        shippingRepository.UpdateClearPreScreenFollowupNotes(shipDetails.OrderInvoiceId, 25, DateTime.Now);
                         //log
                         shippingRepository.AddLogTrackPsbPibIssueLifeCycle(shipDetails.ShippingInvoiceFk, 0
                                    , "STStatusUpdatePSB", false, false, null, true, false, null, false,

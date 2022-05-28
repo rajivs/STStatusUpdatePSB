@@ -153,9 +153,9 @@ namespace STStatusUpdatePSB.Concrete
             return updateStatus;
         }
 
-        public int UpdateClearPreScreenFollowupNotes(int orderInvoiceId, int reasonFk)
+        public int UpdateClearPreScreenFollowupNotes(int orderInvoiceId, int reasonFk, DateTime dateUpdated)
         {
-            var updateStatus = _shippingInvoiceDbl.UpdateClearPreScreenFollowupNotes(orderInvoiceId, reasonFk);
+            var updateStatus = _shippingInvoiceDbl.UpdateClearPreScreenFollowupNotes(orderInvoiceId, reasonFk, dateUpdated);
             return updateStatus;
         }
     }

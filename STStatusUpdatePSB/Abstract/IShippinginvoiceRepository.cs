@@ -26,6 +26,6 @@ namespace STStatusUpdatePSB.Abstract
         Issues GetPibIssueList(int shippingInvoiceId);
         int UpdatePsbAttemptCount(int shippingInvoiceFk, DateTime dateUpdated);
         int UpdatePibAttemptCount(int shippingInvoiceFk, DateTime dateUpdated);
-        int UpdateClearPreScreenFollowupNotes(int orderInvoiceId, int reasonFk);
+        int UpdateClearPreScreenFollowupNotes(int orderInvoiceId, int reasonFk, DateTime dateUpdated);
     }
 }
